@@ -1,0 +1,22 @@
+﻿@model CDC.Dominio.Models.Produto
+           
+<div class="well well-lg">
+    <h3>
+        <strong>@Model.Nome</strong>
+        <span class="pull-right label label-primary">
+            @Html.DisplayFor(model => model.Preco)
+        </span>
+    </h3>
+
+    @using (Html.BeginForm("AdicionaraoCarrinho", "Carrinho"))
+    {
+        <div class="pull-right">
+            @Html.HiddenFor(x => x.IdProduto)
+            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+            <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-shopping-cart"></i> Adicionar </button>
+        </div>
+    }
+
+    <span class="lead"> @Html.DisplayTextFor(model => model.Descricao)</span>
+    <img src="@Url.Content(Model.Imagem)" width="200" height="200" />
+</div>

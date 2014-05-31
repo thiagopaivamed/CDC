@@ -1,0 +1,51 @@
+﻿@model CDC.Dominio.ViewModels.CarrinhoIndexViewModel
+@{
+    ViewBag.Title = "CDC: Seu carrinho de compras";
+}
+<h4>Seu carrinho</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Quantidade</th>
+            <th>Item</th>
+            <th class="text-right">Preço</th>
+            <th class="text-right">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.op.Linhas())
+        {
+            <tr>
+                <td class="text-center">@line.Quantidade</td>
+                <td class="text-left">@line.Produto.Nome</td>
+                <td class="text-right">
+                    @line.Produto.Preco.ToString("c")
+            </td>
+                <td class="text-right">
+                    @((line.Quantidade * line.Produto.Preco).ToString("c"))
+                </td>
+                <td>
+                    @using (Html.BeginForm("RemoverdoCarrinho", "Carrinho"))
+                    {
+                        @Html.Hidden("IdProduto", line.Produto.IdProduto)
+                        @Html.HiddenFor(x => x.ReturnUrl)
+                        <button class="btn btn-sm btn-danger" type="submit"><i class="glyphicon glyphicon-trash"></i> Excluir </button>
+                    }
+                </td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">
+                @Model.op.ValorTotal().ToString("c")
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<div class="text-center">
+    <a class="btn btn-primary" href="@Model.ReturnUrl">
+        Continuar 
+    </a>
+</div>

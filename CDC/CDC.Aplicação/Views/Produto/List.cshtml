@@ -1,0 +1,13 @@
+﻿@model CDC.Dominio.ViewModels.ProdutoListViewModel
+@{
+    ViewBag.Title = "Produtos Cadastrados";
+}
+
+@foreach (var p in Model.Produtos)
+{
+    @Html.Partial("SumarioProduto", p)
+}
+
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
+</div>

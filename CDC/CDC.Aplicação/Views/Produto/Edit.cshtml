@@ -1,0 +1,81 @@
+﻿@model CDC.Dominio.Models.Produto
+
+@{
+    ViewBag.Title = "Edição de Produtos";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div align="center">
+    <h4>Edição de Produtos</h4>
+    <br />
+</div>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.IdProduto)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Descricao, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Descricao, new { @class = "form-control", id = "descricao" })
+                @Html.ValidationMessageFor(model => model.Descricao)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Imagem, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Imagem, new { type = "file", id = "imagem", name = "imagem" })
+                @Html.ValidationMessageFor(model => model.Imagem)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Nome, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Nome)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Peso, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Peso, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Peso)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Preco, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Preco, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Preco)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tipo, "Tipo", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Tipo", String.Empty)
+                @Html.ValidationMessageFor(model => model.Tipo)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="panel-footer">
+                    <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-floppy-disk"></i> Salvar</button> | @Html.ActionLink("Voltar", "Index", null, new { @class="btn btn-default" })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

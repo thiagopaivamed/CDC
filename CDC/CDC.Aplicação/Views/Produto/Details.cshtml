@@ -1,0 +1,67 @@
+﻿@model CDC.Dominio.Models.Produto
+
+@{
+    ViewBag.Title = "Detalhes do produto";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div align="center">
+    <h4>Detalhes do Produto</h4>
+    <br />
+</div>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+        <dd>
+            @Html.DisplayTextFor(model => model.Descricao)
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.Imagem)
+        </dt>
+
+        <dd>
+            <img src="@Url.Content(Model.Imagem)" width="200" height="200" />
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.Peso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Peso)
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.Preco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Preco)
+        </dd>
+        <br />
+        <dt>
+            Tipo
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipodeProduto.Nome)
+        </dd>
+        <br />
+    </dl>
+</div>
+<p class="panel-footer" >
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdProduto }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+</p>

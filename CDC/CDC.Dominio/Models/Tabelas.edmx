@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CDCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Carrinho">
+          <Key>
+            <PropertyRef Name="IdCarrinho" />
+          </Key>
+          <Property Name="IdCarrinho" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataHora" Type="datetime" Nullable="false" />
+          <Property Name="ItensCarrinho" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemCarrinho">
+          <Key>
+            <PropertyRef Name="IdItemCarrinho" />
+          </Key>
+          <Property Name="IdItemCarrinho" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Produtos" Type="int" Nullable="false" />
+          <Property Name="Quantidade" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Produto">
+          <Key>
+            <PropertyRef Name="IdProduto" />
+          </Key>
+          <Property Name="IdProduto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Imagem" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Peso" Type="int" Nullable="false" />
+          <Property Name="Preco" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Tipo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipodeProduto">
+          <Key>
+            <PropertyRef Name="IdTipoProduto" />
+          </Key>
+          <Property Name="IdTipoProduto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ItemCarrinhoCarrinho">
+          <End Role="ItemCarrinho" Type="Self.ItemCarrinho" Multiplicity="1" />
+          <End Role="Carrinho" Type="Self.Carrinho" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemCarrinho">
+              <PropertyRef Name="IdItemCarrinho" />
+            </Principal>
+            <Dependent Role="Carrinho">
+              <PropertyRef Name="ItensCarrinho" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProdutoItemCarrinho">
+          <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
+          <End Role="ItemCarrinho" Type="Self.ItemCarrinho" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produto">
+              <PropertyRef Name="IdProduto" />
+            </Principal>
+            <Dependent Role="ItemCarrinho">
+              <PropertyRef Name="Produtos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipodeProdutoProduto">
+          <End Role="TipodeProduto" Type="Self.TipodeProduto" Multiplicity="1" />
+          <End Role="Produto" Type="Self.Produto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipodeProduto">
+              <PropertyRef Name="IdTipoProduto" />
+            </Principal>
+            <Dependent Role="Produto">
+              <PropertyRef Name="Tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CDCModelStoreContainer">
+          <EntitySet Name="Carrinho" EntityType="Self.Carrinho" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemCarrinho" EntityType="Self.ItemCarrinho" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Produto" EntityType="Self.Produto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipodeProduto" EntityType="Self.TipodeProduto" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ItemCarrinhoCarrinho" Association="Self.FK_ItemCarrinhoCarrinho">
+            <End Role="ItemCarrinho" EntitySet="ItemCarrinho" />
+            <End Role="Carrinho" EntitySet="Carrinho" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProdutoItemCarrinho" Association="Self.FK_ProdutoItemCarrinho">
+            <End Role="Produto" EntitySet="Produto" />
+            <End Role="ItemCarrinho" EntitySet="ItemCarrinho" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipodeProdutoProduto" Association="Self.FK_TipodeProdutoProduto">
+            <End Role="TipodeProduto" EntitySet="TipodeProduto" />
+            <End Role="Produto" EntitySet="Produto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CDCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Carrinho">
+          <Key>
+            <PropertyRef Name="IdCarrinho" />
+          </Key>
+          <Property Name="IdCarrinho" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ItensCarrinho" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ItemCarrinho" Relationship="Self.FK_ItemCarrinhoCarrinho" FromRole="Carrinho" ToRole="ItemCarrinho" />
+        </EntityType>
+        <EntityType Name="ItemCarrinho">
+          <Key>
+            <PropertyRef Name="IdItemCarrinho" />
+          </Key>
+          <Property Name="IdItemCarrinho" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Produtos" Type="Int32" Nullable="false" />
+          <Property Name="Quantidade" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Carrinho" Relationship="Self.FK_ItemCarrinhoCarrinho" FromRole="ItemCarrinho" ToRole="Carrinho" />
+          <NavigationProperty Name="Produto" Relationship="Self.FK_ProdutoItemCarrinho" FromRole="ItemCarrinho" ToRole="Produto" />
+        </EntityType>
+        <EntityType Name="Produto">
+          <Key>
+            <PropertyRef Name="IdProduto" />
+          </Key>
+          <Property Name="IdProduto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Imagem" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Peso" Type="Int32" Nullable="false" />
+          <Property Name="Preco" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Tipo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ItemCarrinho" Relationship="Self.FK_ProdutoItemCarrinho" FromRole="Produto" ToRole="ItemCarrinho" />
+          <NavigationProperty Name="TipodeProduto" Relationship="Self.FK_TipodeProdutoProduto" FromRole="Produto" ToRole="TipodeProduto" />
+        </EntityType>
+        <EntityType Name="TipodeProduto">
+          <Key>
+            <PropertyRef Name="IdTipoProduto" />
+          </Key>
+          <Property Name="IdTipoProduto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Produto" Relationship="Self.FK_TipodeProdutoProduto" FromRole="TipodeProduto" ToRole="Produto" />
+        </EntityType>
+        <Association Name="FK_ItemCarrinhoCarrinho">
+          <End Role="ItemCarrinho" Type="Self.ItemCarrinho" Multiplicity="1" />
+          <End Role="Carrinho" Type="Self.Carrinho" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemCarrinho">
+              <PropertyRef Name="IdItemCarrinho" />
+            </Principal>
+            <Dependent Role="Carrinho">
+              <PropertyRef Name="ItensCarrinho" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProdutoItemCarrinho">
+          <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
+          <End Role="ItemCarrinho" Type="Self.ItemCarrinho" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produto">
+              <PropertyRef Name="IdProduto" />
+            </Principal>
+            <Dependent Role="ItemCarrinho">
+              <PropertyRef Name="Produtos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipodeProdutoProduto">
+          <End Role="TipodeProduto" Type="Self.TipodeProduto" Multiplicity="1" />
+          <End Role="Produto" Type="Self.Produto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipodeProduto">
+              <PropertyRef Name="IdTipoProduto" />
+            </Principal>
+            <Dependent Role="Produto">
+              <PropertyRef Name="Tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CDCEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Carrinho" EntityType="Self.Carrinho" />
+          <EntitySet Name="ItemCarrinho" EntityType="Self.ItemCarrinho" />
+          <EntitySet Name="Produto" EntityType="Self.Produto" />
+          <EntitySet Name="TipodeProduto" EntityType="Self.TipodeProduto" />
+          <AssociationSet Name="FK_ItemCarrinhoCarrinho" Association="Self.FK_ItemCarrinhoCarrinho">
+            <End Role="ItemCarrinho" EntitySet="ItemCarrinho" />
+            <End Role="Carrinho" EntitySet="Carrinho" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProdutoItemCarrinho" Association="Self.FK_ProdutoItemCarrinho">
+            <End Role="Produto" EntitySet="Produto" />
+            <End Role="ItemCarrinho" EntitySet="ItemCarrinho" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipodeProdutoProduto" Association="Self.FK_TipodeProdutoProduto">
+            <End Role="TipodeProduto" EntitySet="TipodeProduto" />
+            <End Role="Produto" EntitySet="Produto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CDCModelStoreContainer" CdmEntityContainer="CDCEntities">
+          <EntitySetMapping Name="Carrinho">
+            <EntityTypeMapping TypeName="CDCModel.Carrinho">
+              <MappingFragment StoreEntitySet="Carrinho">
+                <ScalarProperty Name="IdCarrinho" ColumnName="IdCarrinho" />
+                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+                <ScalarProperty Name="ItensCarrinho" ColumnName="ItensCarrinho" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemCarrinho">
+            <EntityTypeMapping TypeName="CDCModel.ItemCarrinho">
+              <MappingFragment StoreEntitySet="ItemCarrinho">
+                <ScalarProperty Name="IdItemCarrinho" ColumnName="IdItemCarrinho" />
+                <ScalarProperty Name="Produtos" ColumnName="Produtos" />
+                <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produto">
+            <EntityTypeMapping TypeName="CDCModel.Produto">
+              <MappingFragment StoreEntitySet="Produto">
+                <ScalarProperty Name="IdProduto" ColumnName="IdProduto" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Imagem" ColumnName="Imagem" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Peso" ColumnName="Peso" />
+                <ScalarProperty Name="Preco" ColumnName="Preco" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipodeProduto">
+            <EntityTypeMapping TypeName="CDCModel.TipodeProduto">
+              <MappingFragment StoreEntitySet="TipodeProduto">
+                <ScalarProperty Name="IdTipoProduto" ColumnName="IdTipoProduto" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
